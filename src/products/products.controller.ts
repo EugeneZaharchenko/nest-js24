@@ -13,6 +13,13 @@ export class ProductsController {
     return this.categories;
   }
 
+   @Get('category/:id')
+  @Header('Content-Type', 'text/plain')
+  getCategoryById(@Param('id') id: string): string {
+    const categoryId = +id - 1;
+    return `Category with id: ${this.categories[categoryId]}`;
+  }
+
   @Post('add')
   addProduct(
     @Body('title') title: string,
@@ -32,12 +39,12 @@ export class ProductsController {
     return this.productsService.getProducts();
   }
 
-  @Get(':id')
+   @Get(':id')
   @Header('Content-Type', 'text/plain')
-  getCategoryById(@Param('id') id: string): string {
-    const categoryId = +id - 1;
-    return `Category with id: ${this.categories[categoryId]}`;
+  getProductById(@Param('id') id: string): Product {
+    return this.productsService.getProductById(id);
   }
+ 
 }
 
 export default ProductsController;
